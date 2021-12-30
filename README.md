@@ -1,7 +1,5 @@
 ---
-
 Searching Places
-
 ---
 
 ## Searching Places
@@ -23,10 +21,11 @@ This solution will work with **hooks.**
 > [action]
 >
 > To use state you'll import a special function. Edit `PLACESList.js`. Update the import statement at the top to include `{ useState }`.
->
+
 ```JS
 import React, { useState } from 'react'
 ```
+
 >
 
 Create the input field for the search feature.
@@ -36,7 +35,7 @@ When I did this I had already setup the grid and hadn't thought of the how the f
 > [action]
 >
 > Edit the `PLACESList` component in `PLACESList.js`
->
+
 ```JS
 function PLACESList() {
     const [ query, setQuery ] = useState('')
@@ -56,6 +55,7 @@ function PLACESList() {
   )
 }
 ```
+
 >
 
 If this is working you should be able to type in the field and see the value.
@@ -85,7 +85,7 @@ if ('surreptitious'.includes('it')) {
 Note, case matters:
 
 ```js
-'Ithica'.includes('it') // returns false!
+"Ithica".includes("it"); // returns false!
 ```
 
 With this in mind what do we search? The data we have has a couple fields that might contain things people would search for.
@@ -98,7 +98,7 @@ the description might be used but it contains a lot of text that might provide f
 > [action]
 >
 > Edit `PLACESList.js`.
->
+
 ```JS
 function PLACESList() {
     ...
@@ -108,7 +108,6 @@ function PLACESList() {
     ...
 }
 ```
-
 
 That's pretty long and probably hard to grok. Let's take it apart.
 
@@ -206,7 +205,7 @@ To fix this let's add an id property to our data.
 > Add a new file: `places-data.js` put this in the same folder as `places-data.json`.
 >
 > Add the following code to `places-data.js`:
->
+
 ```JS
 import data from './places-data.json'
 
@@ -217,28 +216,34 @@ data.forEach((obj, i) => {
 export default data
 ```
 
-
 What happened here? This file imports `./places-data.json`, loops over the data and adds a new **id** property to each object. Where the objects originally looked like this:
 
 ```JS
-{
-    title: 'Transamerica Redwood Park',
-    desc: 'Located in the shadow of the Transamerica Pyramid ...',
-    address: '600 Montgomery St San ...',
+    {
+      "title": "Buckingham Fountain",
+      "desc": "Buckingham Fountain is a Chicago Landmark in the center of Grant Park, and between Queen's Landing and Congress Parkway.",
+      "address": "301 S Columbus Dr, Chicago, IL 60605",
+      "geo": { "lat": 10000, "lon": 200000 },
+      "images": ["buckingham-fountain.png"],
+      "features": ["outdoors", "art"],
+      "hours": "24 hours"
+    },
     ...
-}
 ```
 
 The objects now all look like this:
 
 ```js
-{
-    id: 0, // NEW id added here matches the index of this element!
-    title: 'Transamerica Redwood Park',
-    desc: 'Located in the shadow of the Transamerica Pyramid ...',
-    address: '600 Montgomery St San ...',
-    ...
-}
+    {
+      "id": 0, // NEW id added here matches the index of this element!
+      "title": "Buckingham Fountain",
+      "desc": "Buckingham Fountain is a Chicago Landmark in the center of Grant Park, and between Queen's Landing and Congress Parkway.",
+      "address": "301 S Columbus Dr, Chicago, IL 60605",
+      "geo": { "lat": 10000, "lon": 200000 },
+      "images": ["buckingham-fountain.png"],
+      "features": ["outdoors", "art"],
+      "hours": "24 hours"
+    },
 ```
 
 The last line exports the data. Our other files can now import the data from this file. You'll need to edit any of the files that import `./places-data.json` and change the import to `./places-data.js` (notice the difference `.json` to `.js`.)
@@ -246,12 +251,12 @@ The last line exports the data. Our other files can now import the data from thi
 > [action]
 >
 > Edit the following follows changes in `PLACESDetails.js`, and `PLACESList.js`:
->
+
 ```js
 // Change
-import data from '../../places-data.json'
+import data from "../../places-data.json";
 // to
-import data from '../../places-data.js'
+import data from "../../places-data.js";
 ```
 
 <!--  -->
@@ -261,7 +266,7 @@ import data from '../../places-data.js'
 > Use the **id** from data rather than the index from map as the id for each space.
 >
 > Edit `./components/PLACESList.js`
->
+
 ```JS
 const places = data.filter(({ features, title, address }) => {
     ...
@@ -281,6 +286,7 @@ const places = data.filter(({ features, title, address }) => {
     })
     ...
 ```
+
 >
 
 Here you replaced the index of the element in the array with the id of that element. Where the index might change when the array is filtered each object will always use the same value for the id.
@@ -294,14 +300,15 @@ Here are the styles I added.
 > [action]
 >
 > Edit `PLACESList.css` add the following:
->
+
 ```css
 .PLACESList form {
   display: flex;
   align-items: flex-start;
 }
 
-.PLACESList form input, .PLACESList form button {
+.PLACESList form input,
+.PLACESList form button {
   padding: 0.5em;
   margin: 0;
   border: 1px solid;
